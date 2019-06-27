@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0jzoi92" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.4">
+  <bpmn:signal id="Signal_0ua3e0q" name="Signal_1i5kha5" />
+  <bpmn:signal id="Signal_1ng96aq" name="Fremdsignal" />
+  <bpmn:collaboration id="Collaboration_06tzmmk">
+    <bpmn:participant id="Participant_1buuxiy" name="Betrüger" processRef="Betrugsversuch" />
+  </bpmn:collaboration>
+  <bpmn:process id="Betrugsversuch" name="Betrugsversuch" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_0ywptr0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_0dh7jne" name="Fremdsignal">
+      <bpmn:incoming>SequenceFlow_0l2ifw8</bpmn:incoming>
+      <bpmn:signalEventDefinition signalRef="Signal_1ng96aq" />
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_0asqmgu" name="Betrugsversuch" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="feld" type="string" defaultValue="Dies ist ein Betrugsversuch!" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0ywptr0</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0l2ifw8</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0ywptr0" sourceRef="StartEvent_1" targetRef="Task_0asqmgu" />
+    <bpmn:sequenceFlow id="SequenceFlow_0l2ifw8" sourceRef="Task_0asqmgu" targetRef="EndEvent_0dh7jne" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_06tzmmk">
+      <bpmndi:BPMNShape id="Participant_1buuxiy_di" bpmnElement="Participant_1buuxiy">
+        <dc:Bounds x="17" y="14" width="514" height="204" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0kxoucg_di" bpmnElement="EndEvent_0dh7jne">
+        <dc:Bounds x="419" y="95" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="406" y="138" width="62" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_1ykv38u_di" bpmnElement="Task_0asqmgu">
+        <dc:Bounds x="224" y="73" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1rqfhr1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="93" y="95" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0l2ifw8_di" bpmnElement="SequenceFlow_0l2ifw8">
+        <di:waypoint x="324" y="113" />
+        <di:waypoint x="419" y="113" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ywptr0_di" bpmnElement="SequenceFlow_0ywptr0">
+        <di:waypoint x="129" y="113" />
+        <di:waypoint x="224" y="113" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

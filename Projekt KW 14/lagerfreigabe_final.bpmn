@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1cilbrs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.4">
+  <bpmn:signal id="Signal_154jnp9" name="LagerFreigabe" />
+  <bpmn:collaboration id="Collaboration_1grmcau">
+    <bpmn:participant id="Participant_1pf6vn2" name="Warenausgabe" processRef="lagerfreigabe_final" />
+  </bpmn:collaboration>
+  <bpmn:process id="lagerfreigabe_final" name="Lagerfreigabe" isExecutable="true">
+    <bpmn:sequenceFlow id="SequenceFlow_1csngpr" sourceRef="StartEvent_1" targetRef="IntermediateThrowEvent_01hh89b" />
+    <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_01hh89b" name="Freigabeempfänger">
+      <bpmn:incoming>SequenceFlow_1csngpr</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_00yz2oi</bpmn:outgoing>
+      <bpmn:signalEventDefinition signalRef="Signal_154jnp9" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:scriptTask id="Task_037dqz3" name="Freigabe überprüfen" scriptFormat="Javascript" camunda:resultVariable="confirmation">
+      <bpmn:incoming>SequenceFlow_00yz2oi</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0t7cf0u</bpmn:outgoing>
+      <bpmn:script>var confirmation = "Ware ist bezahlt!";
+confirmation;</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:userTask id="Task_1bpawhd" name="Freigabe bestätigen" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="confirmation" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0t7cf0u</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_15wcd6r</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_0hh88r7" name="Ware ausgegeben">
+      <bpmn:incoming>SequenceFlow_15wcd6r</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_00yz2oi" sourceRef="IntermediateThrowEvent_01hh89b" targetRef="Task_037dqz3" />
+    <bpmn:sequenceFlow id="SequenceFlow_0t7cf0u" sourceRef="Task_037dqz3" targetRef="Task_1bpawhd" />
+    <bpmn:sequenceFlow id="SequenceFlow_15wcd6r" sourceRef="Task_1bpawhd" targetRef="EndEvent_0hh88r7" />
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_1csngpr</bpmn:outgoing>
+    </bpmn:startEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1grmcau">
+      <bpmndi:BPMNShape id="Participant_1pf6vn2_di" bpmnElement="Participant_1pf6vn2">
+        <dc:Bounds x="104" y="106" width="779" height="305" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_1vxrhwp_di" bpmnElement="IntermediateThrowEvent_01hh89b">
+        <dc:Bounds x="279" y="243" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="259" y="286" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ScriptTask_11lq63q_di" bpmnElement="Task_037dqz3">
+        <dc:Bounds x="399" y="221" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_14o1u3p_di" bpmnElement="Task_1bpawhd">
+        <dc:Bounds x="577" y="221" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1gwds8x_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="176" y="243" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1yztoja_di" bpmnElement="EndEvent_0hh88r7">
+        <dc:Bounds x="757" y="243" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="731" y="286" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_15wcd6r_di" bpmnElement="SequenceFlow_15wcd6r">
+        <di:waypoint x="677" y="261" />
+        <di:waypoint x="757" y="261" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0t7cf0u_di" bpmnElement="SequenceFlow_0t7cf0u">
+        <di:waypoint x="499" y="261" />
+        <di:waypoint x="577" y="261" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_00yz2oi_di" bpmnElement="SequenceFlow_00yz2oi">
+        <di:waypoint x="315" y="261" />
+        <di:waypoint x="399" y="261" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1csngpr_di" bpmnElement="SequenceFlow_1csngpr">
+        <di:waypoint x="212" y="261" />
+        <di:waypoint x="279" y="261" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
