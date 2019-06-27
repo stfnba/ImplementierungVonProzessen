@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="normalID" name="Invoice Creator" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="dd" name="Discount determination">
+    <extensionElements>
+      <biodi:bounds x="361" y="315" width="180" height="80" />
+      <biodi:edge source="InputData_1qhkjnz">
+        <biodi:waypoints x="272" y="379" />
+        <biodi:waypoints x="361" y="378" />
+      </biodi:edge>
+      <biodi:edge source="InputData_0835z13">
+        <biodi:waypoints x="271" y="326" />
+        <biodi:waypoints x="361" y="326" />
+      </biodi:edge>
+    </extensionElements>
+    <informationRequirement>
+      <requiredInput href="#InputData_1qhkjnz" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#InputData_0835z13" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0ampu4o">
+      <input id="InputClause_1grjnz7" label="Private customer?">
+        <inputExpression id="LiteralExpression_1dswsn5" typeRef="boolean">
+          <text>privatecustomer</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0mekeeb" label="Membership type">
+        <inputExpression id="LiteralExpression_072cl1n" typeRef="string">
+          <text>membershiptype</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0gao3s2" label="Percentual discount" name="percentualdc" typeRef="double" />
+      <rule id="DecisionRule_15ywzgs">
+        <inputEntry id="UnaryTests_1rragp9">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0emlw2m">
+          <text>"none"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1edws85">
+          <text>0.0</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1fotfro">
+        <inputEntry id="UnaryTests_0kcw9mp">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_11h0hug">
+          <text>"silver"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_181lhag">
+          <text>0.05</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0m5dx9i">
+        <inputEntry id="UnaryTests_0zqbqqk">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vhoois">
+          <text>"gold"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0fdu0n1">
+          <text>0.15</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1jv03j8">
+        <inputEntry id="UnaryTests_1t4j541">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0k72aui">
+          <text>"none"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0jtv81d">
+          <text>0.05</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0dmc8st">
+        <inputEntry id="UnaryTests_18tiysj">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_14gsur7">
+          <text>"silver"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0vdo43y">
+          <text>0.15</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1m41c1s">
+        <inputEntry id="UnaryTests_0jgru0a">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_00e58wz">
+          <text>"gold"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1nll3sr">
+          <text>0.25</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1r7lqpi">
+        <inputEntry id="UnaryTests_19y34w8">
+          <text>true, false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_04tcvlc">
+          <text>not("none","silver","gold")</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00aoj9x">
+          <text>0.0</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_1qhkjnz" name="membershiptype">
+    <extensionElements>
+      <biodi:bounds x="147" y="356" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+  <inputData id="InputData_0835z13" name="privatecustomer">
+    <extensionElements>
+      <biodi:bounds x="146" y="298" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+  <inputData id="InputData_0cg2877" name="customerID">
+    <extensionElements>
+      <biodi:bounds x="154" y="608" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+  <inputData id="InputData_15qxuet" name="productvalue">
+    <extensionElements>
+      <biodi:bounds x="144" y="205" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+  <decision id="cidcheck" name="Customer ID Check">
+    <extensionElements>
+      <biodi:bounds x="363" y="590" width="180" height="80" />
+      <biodi:edge source="InputData_0cg2877">
+        <biodi:waypoints x="279" y="631" />
+        <biodi:waypoints x="362" y="630" />
+      </biodi:edge>
+      <biodi:edge source="KnowledgeSource_0x6jbg2">
+        <biodi:waypoints x="453" y="717" />
+        <biodi:waypoints x="453" y="671" />
+      </biodi:edge>
+    </extensionElements>
+    <informationRequirement>
+      <requiredInput href="#InputData_0cg2877" />
+    </informationRequirement>
+    <authorityRequirement>
+      <requiredAuthority href="#KnowledgeSource_0x6jbg2" />
+    </authorityRequirement>
+    <decisionTable id="DecisionTable_0g7h7bp">
+      <input id="InputClause_14d0148" label="Customer ID">
+        <inputExpression id="LiteralExpression_1i31wbo" typeRef="integer">
+          <text>customerID</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1xqwc7q" label="Result of ID check" name="idcheck" typeRef="string" />
+      <rule id="DecisionRule_0ktatg5">
+        <inputEntry id="UnaryTests_0fnc6sv">
+          <text>[0..10000]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_15cpgjm">
+          <text>"Valid Customer"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_06foajf">
+        <inputEntry id="UnaryTests_1tjdog9">
+          <text>&lt; 0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1fegnwz">
+          <text>"Invalid Customer"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_19cod72">
+        <inputEntry id="UnaryTests_0mu57vj">
+          <text>&gt; 10000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_113d2a6">
+          <text>"Invalid Customer"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0y4r36g" name="Quarter determination">
+    <extensionElements>
+      <biodi:bounds x="363" y="447" width="180" height="80" />
+      <biodi:edge source="InputData_0wyru4e">
+        <biodi:waypoints x="277" y="492" />
+        <biodi:waypoints x="363" y="491" />
+      </biodi:edge>
+    </extensionElements>
+    <informationRequirement>
+      <requiredInput href="#InputData_0wyru4e" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_05ticud">
+      <input id="InputClause_0h56cq4" label="Current date">
+        <inputExpression id="LiteralExpression_1eit2e5" typeRef="date">
+          <text>currentdate</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_19sk1cu" label="Current quarter" name="currentquarter" typeRef="string" />
+      <rule id="DecisionRule_1wxpehm">
+        <inputEntry id="UnaryTests_1tqgsan">
+          <text>[date and time("2019-01-01T00:00:00")..date and time("2019-03-31T23:59:59")]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0a2eqn3">
+          <text>"Q1"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ntm2wo">
+        <inputEntry id="UnaryTests_1j62854">
+          <text>[date and time("2019-04-01T00:00:00")..date and time("2019-06-30T23:59:59")]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02x1pm3">
+          <text>"Q2"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0nupgei">
+        <inputEntry id="UnaryTests_1nkiosp">
+          <text>[date and time("2019-07-01T00:00:00")..date and time("2019-09-30T23:59:59")]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_163gz9j">
+          <text>"Q3"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1jcmo0a">
+        <inputEntry id="UnaryTests_01vfbag">
+          <text>[date and time("2019-10-01T00:00:00")..date and time("2019-12-31T23:59:59")]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0xj2ilq">
+          <text>"Q4"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1hkyobs">
+        <inputEntry id="UnaryTests_0vbdtjl">
+          <text>&lt; date and time("2019-01-01T00:00:00")</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1isvecr">
+          <text>"Das eingegebene Datum liegt vor dem aktuellen Geschäftsjahr."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_11n1ecp">
+        <inputEntry id="UnaryTests_1pmznsz">
+          <text>&gt; date and time("2019-12-31T23:59:59")</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1bd1yq2">
+          <text>"Das eingegebene Datum liegt nach dem aktuellen Geschäftsjahr."</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_0wyru4e" name="currentdate">
+    <extensionElements>
+      <biodi:bounds x="152" y="469" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+  <decision id="dqc" name="Product evaluation">
+    <extensionElements>
+      <biodi:bounds x="361" y="187" width="180" height="80" />
+      <biodi:edge source="InputData_15qxuet">
+        <biodi:waypoints x="269" y="227" />
+        <biodi:waypoints x="360" y="227" />
+      </biodi:edge>
+      <biodi:edge source="BusinessKnowledgeModel_14hbzgk">
+        <biodi:waypoints x="445" y="74" />
+        <biodi:waypoints x="447" y="187" />
+      </biodi:edge>
+    </extensionElements>
+    <informationRequirement>
+      <requiredInput href="#InputData_15qxuet" />
+    </informationRequirement>
+    <knowledgeRequirement>
+      <requiredKnowledge href="#BusinessKnowledgeModel_14hbzgk" />
+    </knowledgeRequirement>
+    <decisionTable id="DecisionTable_0zdx1ey" hitPolicy="COLLECT" aggregation="SUM">
+      <input id="InputClause_05086u7" label="Value of shopped product">
+        <inputExpression id="LiteralExpression_1ova0rm" typeRef="double">
+          <text>productvalue</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1ygpd1q" label="Discount qualification" name="dcqualify" typeRef="double" />
+      <rule id="DecisionRule_1nltnb4">
+        <inputEntry id="UnaryTests_0o1dcf8">
+          <text>&gt;= 10.00</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0f5sjyp">
+          <text>0.25</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0zsricw">
+        <inputEntry id="UnaryTests_071u6h7">
+          <text>&gt; 50.00</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ydrft1">
+          <text>0.25</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ermsge">
+        <inputEntry id="UnaryTests_1bgk0kg">
+          <text>&gt; 150.00</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1882pvc">
+          <text>0.25</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_01kf2sa">
+        <inputEntry id="UnaryTests_0p3ekb8">
+          <text>&gt; 500.00</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1fo3qqu">
+          <text>0.25</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1mqkkag">
+        <inputEntry id="UnaryTests_06gtwn7">
+          <text>&lt; 10.00</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_115tjtw">
+          <text>0.0</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="dcc" name="Discount calculation">
+    <extensionElements>
+      <biodi:bounds x="623" y="187" width="180" height="80" />
+      <biodi:edge source="dqc">
+        <biodi:waypoints x="541" y="227" />
+        <biodi:waypoints x="623" y="226" />
+      </biodi:edge>
+      <biodi:edge source="dd">
+        <biodi:waypoints x="541" y="355" />
+        <biodi:waypoints x="720" y="355" />
+        <biodi:waypoints x="720" y="267" />
+      </biodi:edge>
+      <biodi:edge source="dd">
+        <biodi:waypoints x="541" y="355" />
+        <biodi:waypoints x="720" y="355" />
+        <biodi:waypoints x="720" y="267" />
+      </biodi:edge>
+    </extensionElements>
+    <variable id="InformationItem_1bfmnvv" name="finalDiscount" typeRef="double" />
+    <informationRequirement>
+      <requiredDecision href="#dqc" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredDecision href="#dd" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_140c1mr" expressionLanguage="javascript">
+      <text>dcqualify*percentualdc</text>
+    </literalExpression>
+  </decision>
+  <knowledgeSource id="KnowledgeSource_0x6jbg2" name="Customer database">
+    <extensionElements>
+      <biodi:bounds x="403" y="717" width="100" height="63" />
+    </extensionElements>
+  </knowledgeSource>
+  <decision id="rd" name="Final price">
+    <extensionElements>
+      <biodi:bounds x="972" y="29" width="180" height="80" />
+      <biodi:edge source="InputData_15qxuet">
+        <biodi:waypoints x="207" y="205" />
+        <biodi:waypoints x="207" y="92" />
+        <biodi:waypoints x="972" y="92" />
+      </biodi:edge>
+      <biodi:edge source="Decision_0cgl35k">
+        <biodi:waypoints x="1036" y="140" />
+        <biodi:waypoints x="1036" y="109" />
+      </biodi:edge>
+    </extensionElements>
+    <variable id="InformationItem_015xwya" name="finalPrice" typeRef="double" />
+    <informationRequirement>
+      <requiredInput href="#InputData_15qxuet" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredDecision href="#Decision_0cgl35k" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0o8v1fb" expressionLanguage="javascript">
+      <text>convertedDiscount*productvalue</text>
+    </literalExpression>
+  </decision>
+  <businessKnowledgeModel id="BusinessKnowledgeModel_14hbzgk" name="Discount conditions">
+    <extensionElements>
+      <biodi:bounds x="377" y="28" width="135" height="46" />
+    </extensionElements>
+  </businessKnowledgeModel>
+  <decision id="invoiceID" name="Final invoice">
+    <extensionElements>
+      <biodi:bounds x="851" y="517" width="180" height="80" />
+      <biodi:edge source="dcc">
+        <biodi:waypoints x="803" y="245" />
+        <biodi:waypoints x="913" y="245" />
+        <biodi:waypoints x="913" y="517" />
+      </biodi:edge>
+      <biodi:edge source="cidcheck">
+        <biodi:waypoints x="543" y="630" />
+        <biodi:waypoints x="941" y="630" />
+        <biodi:waypoints x="941" y="597" />
+      </biodi:edge>
+      <biodi:edge source="Decision_0y4r36g">
+        <biodi:waypoints x="543" y="487" />
+        <biodi:waypoints x="865" y="487" />
+        <biodi:waypoints x="865" y="517" />
+      </biodi:edge>
+      <biodi:edge source="InputData_0cg2877">
+        <biodi:waypoints x="217" y="608" />
+        <biodi:waypoints x="217" y="570" />
+        <biodi:waypoints x="851" y="570" />
+      </biodi:edge>
+      <biodi:edge source="InputData_0wyru4e">
+        <biodi:waypoints x="215" y="514" />
+        <biodi:waypoints x="215" y="548" />
+        <biodi:waypoints x="851" y="548" />
+      </biodi:edge>
+      <biodi:edge source="rd">
+        <biodi:waypoints x="1108" y="109" />
+        <biodi:waypoints x="1108" y="557" />
+        <biodi:waypoints x="1031" y="557" />
+      </biodi:edge>
+    </extensionElements>
+    <variable id="InformationItem_1infzbn" name="finalInvoice" />
+    <informationRequirement>
+      <requiredDecision href="#dcc" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredDecision href="#cidcheck" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredDecision href="#Decision_0y4r36g" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#InputData_0cg2877" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#InputData_0wyru4e" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredDecision href="#rd" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1cpbaky" expressionLanguage="groovy">
+      <text>def finalInvoice = []
+
+finalInvoice.addAll(currentdate)
+finalInvoice.addAll(currentquarter)
+finalInvoice.addAll(customerID)
+finalInvoice.addAll(idcheck)
+finalInvoice.addAll(finalDiscount)
+finalInvoice.addAll(finalPrice)
+
+
+return finalInvoice</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0cgl35k" name="Discount conversion">
+    <extensionElements>
+      <biodi:bounds x="884" y="140" width="180" height="80" />
+      <biodi:edge source="dcc">
+        <biodi:waypoints x="803" y="204" />
+        <biodi:waypoints x="884" y="204" />
+      </biodi:edge>
+    </extensionElements>
+    <variable id="InformationItem_1agv5vv" name="convertedDiscount" typeRef="double" />
+    <informationRequirement>
+      <requiredDecision href="#dcc" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0u1fx6d" expressionLanguage="javascript">
+      <text>1.0-finalDiscount</text>
+    </literalExpression>
+  </decision>
+</definitions>
