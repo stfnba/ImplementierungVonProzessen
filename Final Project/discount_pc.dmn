@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="DRDPC" name="DRDPC" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="dd1" name="Discount determination">
+    <extensionElements>
+      <biodi:bounds x="461" y="460" width="180" height="80" />
+      <biodi:edge source="InputData_01p7eo6">
+        <biodi:waypoints x="361" y="498" />
+        <biodi:waypoints x="461" y="498" />
+      </biodi:edge>
+    </extensionElements>
+    <informationRequirement>
+      <requiredInput href="#InputData_01p7eo6" />
+    </informationRequirement>
+    <decisionTable id="decisionTable_1">
+      <input id="InputClause_0h4l5ce" label="Membership type">
+        <inputExpression id="LiteralExpression_10ak8lr" typeRef="string">
+          <text>membershiptype</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_0on8j6c">
+          <text>"none","silver","gold"</text>
+        </inputValues>
+      </input>
+      <output id="output_1" label="Percentual discount" name="percentualdc" typeRef="double" />
+      <rule id="DecisionRule_117mrvo">
+        <inputEntry id="UnaryTests_0ts17nj">
+          <text>"none"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1qjs4yy">
+          <text>0.0</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_10vdykm">
+        <inputEntry id="UnaryTests_0osdnhg">
+          <text>"silver"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_05dzh85">
+          <text>0.05</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1s936es">
+        <inputEntry id="UnaryTests_00bkvcl">
+          <text>"gold"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_03znuoc">
+          <text>0.15</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1uywyex">
+        <inputEntry id="UnaryTests_032thpm">
+          <text>not("none","silver","gold")</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0pcnn0q">
+          <text>0.0</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="dqc1" name="Product evaluation">
+    <extensionElements>
+      <biodi:bounds x="459" y="284" width="180" height="80" />
+      <biodi:edge source="InputData_0ptwetm">
+        <biodi:waypoints x="367" y="331" />
+        <biodi:waypoints x="459" y="330" />
+      </biodi:edge>
+      <biodi:edge source="BusinessKnowledgeModel_12zrtcc">
+        <biodi:waypoints x="548" y="202" />
+        <biodi:waypoints x="549" y="283" />
+      </biodi:edge>
+    </extensionElements>
+    <informationRequirement>
+      <requiredInput href="#InputData_0ptwetm" />
+    </informationRequirement>
+    <knowledgeRequirement>
+      <requiredKnowledge href="#BusinessKnowledgeModel_12zrtcc" />
+    </knowledgeRequirement>
+    <decisionTable id="DecisionTable_0csmidp" hitPolicy="COLLECT" aggregation="SUM">
+      <input id="InputClause_0jjv2op" label="Value of shopped product">
+        <inputExpression id="LiteralExpression_0ska1pk" typeRef="double">
+          <text>productvalue</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1s4b9j5" label="Discount qualification" name="dcqualify" typeRef="double" />
+      <rule id="DecisionRule_1bicxpr">
+        <inputEntry id="UnaryTests_0gsg0pc">
+          <text>&gt;= 10.00</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0jg3cyq">
+          <text>0.25</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_09h414n">
+        <inputEntry id="UnaryTests_1b6igvk">
+          <text>&gt; 50.00</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_01nb9xy">
+          <text>0.25</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0trvy2j">
+        <inputEntry id="UnaryTests_0c8xlhm">
+          <text>&gt; 150.00</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0j7rax2">
+          <text>0.25</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_05xsgsk">
+        <inputEntry id="UnaryTests_18hf6wx">
+          <text>&gt; 500.00</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_19fqge4">
+          <text>0.25</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0gldyby">
+        <inputEntry id="UnaryTests_1wee0u6">
+          <text>&lt; 10.00</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_18jf2am">
+          <text>0.0</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_12wrfln">
+        <inputEntry id="UnaryTests_1c6hsa8">
+          <text>&gt;= 0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1rz0ahl">
+          <text>0.0</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_00s6mtz">
+        <inputEntry id="UnaryTests_0bohmtg">
+          <text>&lt; 0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ffgj43">
+          <text>0.0</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="dcc1" name="Discount calculation">
+    <extensionElements>
+      <biodi:bounds x="730" y="359" width="180" height="80" />
+      <biodi:edge source="dqc1">
+        <biodi:waypoints x="639" y="349" />
+        <biodi:waypoints x="730" y="374" />
+      </biodi:edge>
+      <biodi:edge source="dd1">
+        <biodi:waypoints x="641" y="474" />
+        <biodi:waypoints x="760" y="439" />
+      </biodi:edge>
+    </extensionElements>
+    <variable id="InformationItem_14li93g" name="dcgranted" typeRef="double" />
+    <informationRequirement>
+      <requiredDecision href="#dqc1" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredDecision href="#dd1" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_11kbtqk" expressionLanguage="javascript">
+      <text>dcqualify*percentualdc</text>
+    </literalExpression>
+  </decision>
+  <decision id="dcv1" name="Discount conversion">
+    <extensionElements>
+      <biodi:bounds x="952" y="359" width="180" height="80" />
+      <biodi:edge source="dcc1">
+        <biodi:waypoints x="910" y="400" />
+        <biodi:waypoints x="952" y="400" />
+      </biodi:edge>
+    </extensionElements>
+    <variable id="InformationItem_1jyk1z3" name="finaldiscount" typeRef="double" />
+    <informationRequirement>
+      <requiredDecision href="#dcc1" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1okvh6c" expressionLanguage="javascript">
+      <text>1.0-dcgranted</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_01p7eo6" name="membershiptype">
+    <extensionElements>
+      <biodi:bounds x="236" y="475" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+  <inputData id="InputData_0ptwetm" name="productvalue">
+    <extensionElements>
+      <biodi:bounds x="242" y="309" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+  <businessKnowledgeModel id="BusinessKnowledgeModel_12zrtcc" name="Discount conditions">
+    <extensionElements>
+      <biodi:bounds x="480" y="156" width="135" height="46" />
+    </extensionElements>
+  </businessKnowledgeModel>
+  <decision id="dcpc" name="Discounted price">
+    <extensionElements>
+      <biodi:bounds x="1171" y="359" width="180" height="80" />
+      <biodi:edge source="dcv1">
+        <biodi:waypoints x="1132" y="397" />
+        <biodi:waypoints x="1171" y="396" />
+      </biodi:edge>
+      <biodi:edge source="InputData_0ptwetm">
+        <biodi:waypoints x="305" y="309" />
+        <biodi:waypoints x="305" y="110" />
+        <biodi:waypoints x="1261" y="110" />
+        <biodi:waypoints x="1261" y="359" />
+      </biodi:edge>
+    </extensionElements>
+    <variable id="InformationItem_0b60f06" name="pricebt" typeRef="double" />
+    <informationRequirement>
+      <requiredDecision href="#dcv1" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#InputData_0ptwetm" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0iyb8sc" expressionLanguage="javascript">
+      <text>productvalue*finaldiscount</text>
+    </literalExpression>
+  </decision>
+</definitions>

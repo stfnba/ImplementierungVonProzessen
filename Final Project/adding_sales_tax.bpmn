@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0iy2bf3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.4">
+  <bpmn:collaboration id="Collaboration_06r7qi5">
+    <bpmn:participant id="Participant_1gwjeep" name="Checkoutsystem: Taxes" processRef="AddingSalesTax" />
+  </bpmn:collaboration>
+  <bpmn:process id="AddingSalesTax" name="Adding Sales Tax" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Price before taxes calculated">
+      <bpmn:outgoing>SequenceFlow_006eoto</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_0jx7lba" name="Price after taxes calculated">
+      <bpmn:incoming>SequenceFlow_1711uzp</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:scriptTask id="Task_16yozk1" name="Adding sales tax" scriptFormat="JavaScript" camunda:resultVariable="priceat">
+      <bpmn:incoming>SequenceFlow_006eoto</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1711uzp</bpmn:outgoing>
+      <bpmn:script>var pricebt = execution.getVariable("pricebt");
+
+var pricebt =parseFloat(pricebt);
+
+var priceat = pricebt*1.19;
+pricebt;
+priceat;</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="SequenceFlow_006eoto" sourceRef="StartEvent_1" targetRef="Task_16yozk1" />
+    <bpmn:sequenceFlow id="SequenceFlow_1711uzp" sourceRef="Task_16yozk1" targetRef="EndEvent_0jx7lba" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_06r7qi5">
+      <bpmndi:BPMNShape id="Participant_1gwjeep_di" bpmnElement="Participant_1gwjeep">
+        <dc:Bounds x="115" y="50" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0jx7lba_di" bpmnElement="EndEvent_0jx7lba">
+        <dc:Bounds x="497" y="150" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="475" y="193" width="80" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ScriptTask_0dgnwep_di" bpmnElement="Task_16yozk1">
+        <dc:Bounds x="347" y="128" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_11of2y7_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="261" y="150" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="234" y="193" width="90" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1711uzp_di" bpmnElement="SequenceFlow_1711uzp">
+        <di:waypoint x="447" y="168" />
+        <di:waypoint x="497" y="168" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_006eoto_di" bpmnElement="SequenceFlow_006eoto">
+        <di:waypoint x="297" y="168" />
+        <di:waypoint x="347" y="168" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

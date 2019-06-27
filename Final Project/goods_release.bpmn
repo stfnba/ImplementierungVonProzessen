@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1cilbrs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.4">
+  <bpmn:signal id="Signal_154jnp9" name="LagerFreigabe" />
+  <bpmn:collaboration id="Lager">
+    <bpmn:participant id="Participant_1pf6vn2" name="Goods release" processRef="lagerfreigabe_final" />
+  </bpmn:collaboration>
+  <bpmn:process id="lagerfreigabe_final" name="Goods release" isExecutable="true">
+    <bpmn:sequenceFlow id="SequenceFlow_15wcd6r" sourceRef="Task_1bpawhd" targetRef="EndEvent_0hh88r7" />
+    <bpmn:endEvent id="EndEvent_0hh88r7" name="Goods released">
+      <bpmn:incoming>SequenceFlow_15wcd6r</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="StartEvent_1" name="Clearance granted">
+      <bpmn:outgoing>SequenceFlow_0wwmha6</bpmn:outgoing>
+      <bpmn:signalEventDefinition signalRef="Signal_154jnp9" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0wwmha6" sourceRef="StartEvent_1" targetRef="Task_037dqz3" />
+    <bpmn:sequenceFlow id="SequenceFlow_0b3a137" sourceRef="Task_037dqz3" targetRef="Task_1bpawhd" />
+    <bpmn:scriptTask id="Task_037dqz3" name="Check clearance" scriptFormat="Javascript" camunda:resultVariable="confirmation">
+      <bpmn:incoming>SequenceFlow_0wwmha6</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0b3a137</bpmn:outgoing>
+      <bpmn:script>var confirmation = "Ware ist bezahlt!";
+confirmation;</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:userTask id="Task_1bpawhd" name="Confirm clearance" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="confirmation" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0b3a137</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_15wcd6r</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmn:message id="Message_15exug3" name="priceat" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Lager">
+      <bpmndi:BPMNShape id="Participant_1pf6vn2_di" bpmnElement="Participant_1pf6vn2">
+        <dc:Bounds x="104" y="106" width="779" height="305" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ScriptTask_11lq63q_di" bpmnElement="Task_037dqz3">
+        <dc:Bounds x="320" y="221" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_14o1u3p_di" bpmnElement="Task_1bpawhd">
+        <dc:Bounds x="545" y="221" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1yztoja_di" bpmnElement="EndEvent_0hh88r7">
+        <dc:Bounds x="757" y="243" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="737" y="286" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_15wcd6r_di" bpmnElement="SequenceFlow_15wcd6r">
+        <di:waypoint x="645" y="261" />
+        <di:waypoint x="757" y="261" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="StartEvent_0lmauw9_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="176" y="243" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="169" y="286" width="51" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0wwmha6_di" bpmnElement="SequenceFlow_0wwmha6">
+        <di:waypoint x="212" y="261" />
+        <di:waypoint x="320" y="261" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0b3a137_di" bpmnElement="SequenceFlow_0b3a137">
+        <di:waypoint x="420" y="261" />
+        <di:waypoint x="545" y="261" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
